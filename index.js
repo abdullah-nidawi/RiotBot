@@ -57,7 +57,7 @@ client.on("interactionCreate", (interaction) => {
                 new EmbedBuilder()
                     .setDescription(`"${conf}"`)
                     .setTitle(`Anonymous Confession #${id}`)
-                    .setFooter({text: `❗ If this is ToS-breaking or overtly hateful, report it to the moderators | </> with 💜 by 🥭`})
+                    .setFooter({text: `🛑 Report abuse/misuse to the moderators | </> with 💜 by 🥭`})
                     .setColor("DarkPurple")
                     .setTimestamp()
             ] });
