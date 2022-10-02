@@ -1,7 +1,7 @@
 import { config } from "dotenv"
 import { Client, GatewayIntentBits, Routes, EmbedBuilder } from "discord.js"
 import { REST } from "@discordjs/rest"
-import mongoose from "mongoose"
+// import mongoose from "mongoose"
 import CfsCommand from "./cmds/confess.js"
 
 config()
@@ -24,10 +24,10 @@ const client = new Client({ intents:
 
 const rest = new REST({version: "10"}).setToken(TOKEN)
 client.on("ready", async () => {
-    await mongoose.connect(
-        MONGO || "", 
-        {keepAlive:true}
-    )
+    // await mongoose.connect(
+    //     MONGO || "", 
+    //     {keepAlive:true}
+    // )
     console.log(`Logged in as ${client.user.tag}`)
 })
 
