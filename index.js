@@ -31,7 +31,7 @@ client.on("ready", async () => {
     console.log(`Logged in as ${client.user.tag}`)
 })
 
-// var id = 1
+ var id = 1
 
 client.on("interactionCreate", (interaction) => {
     if (interaction.isChatInputCommand()) {
@@ -56,8 +56,8 @@ client.on("interactionCreate", (interaction) => {
             client.channels.cache.get(BOT_CHANNEL).send({ embeds: [
                 new EmbedBuilder()
                     .setDescription(`"${conf}"`)
-                    .setTitle(`Anonymous Confession`)
-                    .setFooter({text: `❗ If this is ToS-breaking or overtly hateful, report it to the moderators | Made with 💜 by Mango`})
+                    .setTitle(`Anonymous Confession #${id}`)
+                    .setFooter({text: `❗ If this is ToS-breaking or overtly hateful, report it to the moderators | </> with 💜 by 🥭`})
                     .setColor("DarkPurple")
                     .setTimestamp()
             ] });
@@ -66,12 +66,12 @@ client.on("interactionCreate", (interaction) => {
                 new EmbedBuilder()
                     .setDescription(`"${conf}"`)
                     .setAuthor({name: interaction.user.tag})
-                    .setTitle(`Confessed:`)
-                    .setFooter({text: `Made with 💜 by Mango`})
+                    .setTitle(`Confession #${id}`)
+                    .setFooter({text: `</> with 💜 by 🥭`})
                     .setTimestamp()
                     .setColor("DarkPurple")
             ] });
-            // id++
+             id++
             // Adds the user to the set so that they can't talk for a minute
             talkedRecently.add(interaction.user.id);
             setTimeout(() => {
