@@ -49,7 +49,7 @@ cdb.connect(function(err){
 client.on("ready", async () => {
     console.log(`Logged in as ${client.user.tag}`);
 })
-var currentInsert;
+let currentInsert;
 client.on("interactionCreate", (interaction) => {
     if (interaction.isChatInputCommand()) {
 
