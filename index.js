@@ -30,7 +30,9 @@ const client = new Client({ intents:
 const rest = new REST({version: "10"}).setToken(TOKEN);
 
 //initialize mysql connection.
-const cdb = mysql.createConnection({
+const cdb = mysql.createPool({
+    connectionLimit : 10,
+    acquireTimeout  : 10000
     host: DB_HOST,
     user: DB_USERNAME,
     password: DB_PASSWORD,
