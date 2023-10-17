@@ -32,14 +32,14 @@ const rest = new REST({version: "10"}).setToken(TOKEN);
 //initialize mysql connection.
 const cdb = mysql.createPool({
     connectionLimit : 10,
-    acquireTimeout  : 10000
+    acquireTimeout  : 10000,
     host: DB_HOST,
     user: DB_USERNAME,
     password: DB_PASSWORD,
     database: DB_NAME,
     port: 3306
-})
-cdb.connect(function(err){
+});
+cdb.getConnection(function(err){
     if (err){
         console.log(err);
     }
@@ -51,7 +51,10 @@ cdb.connect(function(err){
 client.on("ready", async () => {
     console.log(`Logged in as ${client.user.tag}`);
 })
+
 let currentInsert;
+
+
 client.on("interactionCreate", (interaction) => {
     if (interaction.isChatInputCommand()) {
 
@@ -66,7 +69,7 @@ client.on("interactionCreate", (interaction) => {
             const conf = interaction.options.get("confession").value
             //submits confession to db
             cdb.query(`INSERT INTO confessions (author, text) VALUES (${cdb.escape(interaction.user.username)} ,${cdb.escape(conf)})`, function(err, result, fields) {
-                if (err) throw err;             
+                if (err) throw err;
                 currentInsert = parseInt(result.insertId) + 1;
               });
 
