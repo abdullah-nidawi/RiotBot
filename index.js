@@ -93,16 +93,19 @@ client.on("interactionCreate", (interaction) => {
 
             console.log(anon)
 
+            if (anon == true) {
+                client.channels.cache.get(MOD_CHANNEL).send({ embeds: [
+                    new EmbedBuilder()
+                        .setDescription(`"${conf}"`)
+                        .setAuthor({name: interaction.user.username})
+                        .setTitle(`Confession #${currentInsert}`)
+                        .setFooter({text: `</> with 💜 by 🥭`})
+                        .setTimestamp()
+                        .setColor("DarkPurple")
+                ] });
+            }
+
             //sends confession to mods
-            client.channels.cache.get(MOD_CHANNEL).send({ embeds: [
-                new EmbedBuilder()
-                    .setDescription(`"${conf}"`)
-                    .setAuthor({name: interaction.user.username})
-                    .setTitle(`Confession #${currentInsert}`)
-                    .setFooter({text: `</> with 💜 by 🥭`})
-                    .setTimestamp()
-                    .setColor("DarkPurple")
-            ] });
             
             // Adds the user to the set so that they can't talk for a minute
             talkedRecently.add(interaction.user.id);
