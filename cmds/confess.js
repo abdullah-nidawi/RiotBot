@@ -8,11 +8,11 @@ const cfsCommand = new SlashCommandBuilder()
         .setDescription("type your confession...")
         .setRequired(true)
     )
-    .addBooleanOption((option) => 
-        option
-        .setName("log")
-        .setDescription("Should I log?")
-    )
+    // .addBooleanOption((option) => 
+    //     option
+    //     .setName("log")
+    //     .setDescription("Should I log?")
+    // )
     
 
 export default cfsCommand.toJSON()
