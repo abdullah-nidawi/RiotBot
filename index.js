@@ -89,6 +89,10 @@ client.on("interactionCreate", (interaction) => {
                 ephemeral: true
             });
 
+            const anon = interaction.options.get("log").value
+
+            console.log(anon)
+
             //sends confession to mods
             client.channels.cache.get(MOD_CHANNEL).send({ embeds: [
                 new EmbedBuilder()
