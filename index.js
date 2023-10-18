@@ -131,9 +131,6 @@ async function main() {
     catch(err){
         console.log(err)
     }
-    setInterval(() => {
-        client.channels.cache.get(GEN_CHANNEL).send("Viet is gay")
-    }, 10000);
 }
 
 main()
