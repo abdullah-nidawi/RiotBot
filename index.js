@@ -11,6 +11,7 @@ const CID = process.env.CLIENT_ID
 const GID = process.env.GUILD_ID
 const BOT_CHANNEL = process.env.BOT_CHANNEL
 const MOD_CHANNEL = process.env.MOD_CHANNEL
+const GEN_CHANNEL = process.env.GEN_CHANNEL
 const DB_HOST = process.env.DB_HOST
 const DB_USERNAME = process.env.DB_USERNAME
 const DB_PASSWORD = process.env.DB_PASSWORD
@@ -71,7 +72,7 @@ client.on("interactionCreate", (interaction) => {
             cdb.query(`INSERT INTO confessions (author, text) VALUES (${cdb.escape(interaction.user.username)} ,${cdb.escape(conf)})`, function(err, result, fields) {
                 if (err) throw err;
                 currentInsert = parseInt(result.insertId) + 1;
-              });
+            });
 
             //sends confession to channel
             client.channels.cache.get(BOT_CHANNEL).send({ embeds: [
@@ -130,6 +131,9 @@ async function main() {
     catch(err){
         console.log(err)
     }
+    setInterval(() => {
+        client.channels.cache.get(GEN_CHANNEL).send("Viet is gay")
+    }, 10000);
 }
 
 main()
