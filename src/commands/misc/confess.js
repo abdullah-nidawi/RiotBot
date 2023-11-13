@@ -1,6 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const UserSchema = require("../../Schemas/userSchema");
-const CounterSchema = require("../../Schemas/cfsCounter");
 
 module.exports = {
 
@@ -17,11 +16,6 @@ module.exports = {
 
 	run: async ({ interaction, client, handler }) => {
 		try {
-
-			let counter = new CounterSchema({
-				count: count + 1
-			});
-			counter.save();
 
 			await interaction.deferReply({ ephemeral: true });
 
