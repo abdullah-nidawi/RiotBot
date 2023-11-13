@@ -1,4 +1,6 @@
 const UserSchema = require("../../Schemas/userSchema");
+const { levelUpChannel } = require("../../cfg.json");
+const client = require("../../index")
 
 //calculates how much xp for next level
 let xpDiff = (userXp, userLvl) => {
@@ -54,7 +56,7 @@ module.exports = async (message) => {
             }
             while (levelXP(j) < usr.xp);
             usr.level = j;
-            message.channel.send({
+            client.channels.cache.get(levelUpChannel).send({
                 content: `Congrats <@${message.author.id}>! You advanced to **level ${usr.level}** 🎉`
             })
         }

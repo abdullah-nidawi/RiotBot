@@ -18,6 +18,8 @@ const client = new Client({
 	],
 });
 
+module.exports = client;
+
 //init cmdHandler
 new CommandHandler({
 	client,
