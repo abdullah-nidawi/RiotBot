@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const UserSchema = require("../../Schemas/userSchema");
+const CounterSchema = require("../../Schemas/cfsCounter");
 
 module.exports = {
 
@@ -16,6 +17,12 @@ module.exports = {
 
 	run: async ({ interaction, client, handler }) => {
 		try {
+
+			let counter = new CounterSchema({
+				count: count + 1
+			});
+			counter.save();
+
 			await interaction.deferReply({ ephemeral: true });
 
 			let userProfile = await UserSchema.findOne({
@@ -37,7 +44,7 @@ module.exports = {
 							.setDescription(`"${conf}"`)
 							.setTitle(`Anonymous Confession 💭`)
 							.setFooter({
-								text: `🛑 Report abuse/misuse to <@555364633905725686> | </> with 💜 by 🥭`,
+								text: `🛑 Report abuse/misuse to the moderators | </> with 💜 by 🥭`,
 							})
 							.setColor("DarkPurple")
 							.setTimestamp(),
