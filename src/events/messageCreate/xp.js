@@ -40,7 +40,7 @@ module.exports = async (message) => {
     const currentDate = new Date();
     const delta = Math.floor(Math.abs(usr.lastXp - currentDate) / 1000);
 
-    console.log(`delta: ${delta}`);
+    // console.log(`delta: ${delta}`);
 
     if (delta > 60 || true) {
         usr.xp += msgXp;
@@ -51,7 +51,6 @@ module.exports = async (message) => {
 
             do {
                 j++;
-                console.log(j);
             }
             while (levelXP(j) < usr.xp);
             usr.level = j;
