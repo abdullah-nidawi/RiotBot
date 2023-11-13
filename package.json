@@ -1,24 +1,24 @@
 {
-  "type": "module",
-  "name": "cfsbot",
-  "version": "1.7.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "author": "Abdullah Al-Nidawi",
-  "license": "ISC",
-  "dependencies": {
-    "@discordjs/builders": "^1.2.0",
-    "@discordjs/rest": "^1.2.0",
-    "discord.js": "^14.5.0",
-    "dotenv": "^16.0.3",
-    "mongoose": "^6.6.3",
-    "mysql": "^2.18.1"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  },
-  "nodeVersion": "18.16.0"
+	"name": "Riot's Wallet 2.0",
+	"version": "2.0.0",
+	"description": "",
+	"main": "./src/index.js",
+	"scripts": {
+		"start": "nodemon ./src/index.js"
+	},
+	"author": "Mangoexe",
+	"license": "ISC",
+	"dependencies": {
+		"@discordjs/builders": "^1.2.0",
+		"@discordjs/rest": "^1.2.0",
+		"discord.js": "^14.5.0",
+		"djs-commander": "^0.0.50",
+		"dotenv": "^16.0.3",
+		"mongoose": "^6.6.3",
+		"mysql": "^2.18.1"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.1"
+	},
+	"nodeVersion": "18.16.0"
 }
