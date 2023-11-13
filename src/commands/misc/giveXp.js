@@ -1,6 +1,11 @@
 const { SlashCommandBuilder } = require("discord.js");
-const UserSchema = require("../../Schemas/userSchema");
+const UserSchema = require("../../schemas/userSchema");
+const { levelUpChannel, x, y } = require("../../cfg.json");
 
+let levelXP = (lvl) => {
+    const r = Math.floor((lvl / x) ** y + 100);
+    return r;
+}
 
 module.exports = {
 
@@ -39,19 +44,30 @@ module.exports = {
             userId: member.id,
         });
 
-        if (usr) {
-            usr.xp += given_xp;
-            await usr.save();
-        }
-        else {
+        if (!usr) {
             usr = new UserSchema({
                 userName: interaction.options.getUser("user").username,
                 userId: member.id,
                 lastXp: new Date()
             });
-            usr.xp += given_xp;
-            await usr.save();
         }
+
+        usr.xp += given_xp;
+
+        let j = usr.level;
+        if (levelXP(usr.level) < usr.xp) {
+
+            do {
+                j++;
+            }
+            while (levelXP(j) < usr.xp);
+            usr.level = j;
+            client.channels.cache.get(levelUpChannel).send({
+                content: `Congrats <@${member.id}>! You advanced to **level ${usr.level}** 🎉`
+            })
+        }
+
+        await usr.save();
 
         interaction.editReply({
             content: `Gave <@${member.id}> ${given_xp}XP!`

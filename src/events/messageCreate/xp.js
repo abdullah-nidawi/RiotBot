@@ -1,15 +1,11 @@
-const UserSchema = require("../../Schemas/userSchema");
-const { levelUpChannel } = require("../../cfg.json");
+const UserSchema = require("../../schemas/userSchema");
+const { levelUpChannel, x, y } = require("../../cfg.json");
 const client = require("../../index")
 
-//calculates how much xp for next level
-let xpDiff = (userXp, userLvl) => {
-    const r = Math.floor((userLvl / 0.35) ** 2.5) - userXp;
-    return r;
-}
+
 
 let levelXP = (lvl) => {
-    const r = Math.floor((lvl / 0.35) ** 2.5);
+    const r = Math.floor((lvl / x) ** y + 100);
     return r;
 }
 

@@ -1,4 +1,4 @@
-const UserSchema = require("../../Schemas/userSchema");
+const UserSchema = require("../../schemas/userSchema");
 
 
 module.exports = async (member) => {
@@ -9,7 +9,7 @@ module.exports = async (member) => {
     if (usr) {
         return;
     }
-    else{
+    else {
         usr = new UserSchema({
             userName: member.user.username,
             userId: member.id,

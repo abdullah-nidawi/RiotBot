@@ -1,4 +1,4 @@
-const UserSchema = require("../Schemas/userSchema");
+const UserSchema = require("../schemas/userSchema");
 
 module.exports = async (interaction, commandObj, handler, client) => {
     if (commandObj.name === "confess") {
