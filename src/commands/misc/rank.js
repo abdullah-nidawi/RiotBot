@@ -13,11 +13,29 @@ module.exports = {
 
     data: new SlashCommandBuilder()
         .setName("rank")
-        .setDescription("See your current xp and level"),
+        .setDescription("See your current xp and level")
+        .addUserOption((option) =>
+            option
+                .setName("user")
+                .setDescription("who do you wanna reset?")
+        ),
 
     run: async ({ interaction, client }) => {
         await interaction.deferReply();
-        const member = interaction.user;
+
+        let member = interaction.user;
+        let otherMember = interaction.options.getUser("user");
+
+        if (otherMember) {
+            member = otherMember;
+        }
+
+        if (member.bot) {
+            interaction.editReply({
+                content: `Bots don't have ranks dude! <:kyAMK:1172286653725945968>`
+            });
+            return;
+        }
 
         let user = await UserSchema.findOne({
             userId: member.id,
@@ -28,6 +46,7 @@ module.exports = {
                 userId: member.id,
                 userName: member.username
             });
+            user.save();
         }
 
         interaction.editReply({
