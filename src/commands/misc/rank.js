@@ -68,12 +68,14 @@ module.exports = {
         const rank = new canvacord.Rank()
             .setAvatar(member.displayAvatarURL({ size: 256 }))
             .setRank(currentRank)
+            .setRankColor("#94ffda")
             .setLevel(fetchedLevel.level)
-            .setCurrentXP(fetchedLevel.xp)
-            .setRequiredXP(levelXP(fetchedLevel.level))
-            .setProgressBar('#FFC300', 'COLOR')
+            .setLevelColor("#94ffda")
+            .setCurrentXP(fetchedLevel.xp, '#f9cfff')
+            .setRequiredXP(levelXP(fetchedLevel.level), '#f9cfff')
+            .setProgressBar(['#f9cfff', '#ea5592'], 'GRADIENT')
             .setUsername(member.username)
-            .setDiscriminator(member.discriminator);
+            .setCustomStatusColor("#fff")
 
         const data = await rank.build();
         const attachment = new AttachmentBuilder(data);
