@@ -1,7 +1,7 @@
 const Channels = require("../schemas/channelSchema");
 
 module.exports = async (interaction, commandObj, handler, client) => {
-    if (commandObj.name === "confess") {
+    if (commandObj.name === "rank" || commandObj.name === "givexp") {
 
         let guildChannels = await Channels.findOne({
             guildId: interaction.guild.id
@@ -13,14 +13,12 @@ module.exports = async (interaction, commandObj, handler, client) => {
             });
             return true;
         }
-        else if (interaction.channelId != guildChannels.cfsId) {
+        else if (interaction.channelId != guildChannels.rankId) {
             interaction.reply({
-                content: `This command is only available in <#${guildChannels.cfsId}>`,
+                content: `This command is only available in <#${guildChannels.rankId}>`,
             });
             return true;
         }
-
-
 
     }
 

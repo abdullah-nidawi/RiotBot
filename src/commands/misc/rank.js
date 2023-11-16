@@ -1,5 +1,6 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const UserSchema = require("../../schemas/userSchema");
+const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require("discord.js");
+const canvacord = require('canvacord');
+const levelSchema = require("../../schemas/levelSchema");
 const { x, y } = require("../../cfg.json");
 
 let levelXP = (lvl) => {
@@ -21,53 +22,83 @@ module.exports = {
         ),
 
     run: async ({ interaction, client }) => {
+
+
         await interaction.deferReply();
 
-        let member = interaction.user;
-        let otherMember = interaction.options.getUser("user");
+        let target = interaction.options.getUser("user")
 
-        if (otherMember) {
-            member = otherMember;
-        }
+        let member = target || interaction.user;
+
 
         if (member.bot) {
             interaction.editReply({
-                content: `Bots don't have ranks dude! <:kyAMK:1172286653725945968>`
+                content: `Bots don't have ranks <:kyAMK:1172286653725945968>`
             });
             return;
         }
 
-        let user = await UserSchema.findOne({
+        let fetchedLevel = await levelSchema.findOne({
             userId: member.id,
+            guildId: interaction.guild.id
         });
 
-        if (!user) {
-            user = new UserSchema({
-                userId: member.id,
-                userName: member.username
-            });
-            user.save();
+        if (!fetchedLevel || fetchedLevel.xp == 0) {
+            interaction.editReply(
+                target ?
+                    `<@${target.id}> has to get some XP first 💀.`
+                    : "You have to get some XP first 💀."
+            );
+
+            return;
         }
 
-        interaction.editReply({
-            // content: `<@${member.id}> you have ${user.xp} XP & you're level ${user.level}`,
-            embeds: [
-                new EmbedBuilder()
-                    .setTitle(`${member.username}'s rank:`)
-                    .setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.avatar}.png `)
-                    .addFields(
-                        { name: 'Current XP', value: `${user.xp}`, inline: true },
-                        { name: 'Current level', value: `${user.level}`, inline: true },
-                        { name: 'Xp to level-up', value: `${levelXP(user.level) - user.xp}`, inline: true },
+        let allLevels = await levelSchema.find({ guildId: interaction.guild.id }).select('-_id userId level xp');
 
-                    )
-                    .setFooter({
-                        text: `</> with 💜 by 🥭`,
-                    })
-                    .setColor("DarkPurple")
-                    .setTimestamp(),
-            ],
+        allLevels.sort((a, b) => {
+            if (a.level === b.level) {
+                return b.xp - a.xp;
+            } else {
+                return b.level - a.level;
+            }
         });
+
+        let currentRank = allLevels.findIndex((lvl) => lvl.userId === member.id) + 1;
+
+        const rank = new canvacord.Rank()
+            .setAvatar(member.displayAvatarURL({ size: 256 }))
+            .setRank(currentRank)
+            .setLevel(fetchedLevel.level)
+            .setCurrentXP(fetchedLevel.xp)
+            .setRequiredXP(levelXP(fetchedLevel.level))
+            .setProgressBar('#FFC300', 'COLOR')
+            .setUsername(member.username)
+            .setDiscriminator(member.discriminator);
+
+        const data = await rank.build();
+        const attachment = new AttachmentBuilder(data);
+        interaction.editReply({ files: [attachment] });
+
+
+        // interaction.editReply({
+        //     // content: `<@${member.id}> you have ${user.xp} XP & you're level ${user.level}`,
+        //     embeds: [
+        //         new EmbedBuilder()
+        //             .setTitle(`${member.username}'s rank:`)
+        //             .setThumbnail(`https://cdn.discordapp.com/avatars/${member.id}/${member.avatar}.png `)
+        //             .addFields(
+        //                 { name: 'Current XP', value: `${user.xp}`, inline: true },
+        //                 { name: 'Current level', value: `${user.level}`, inline: true },
+        //                 { name: 'Xp to level-up', value: `${levelXP(user.level) - user.xp}`, inline: true },
+
+        //             )
+        //             .setFooter({
+        //                 text: `</> with 💜 by 🥭`,
+        //             })
+        //             .setColor("DarkPurple")
+        //             .setTimestamp(),
+        //     ],
+        // });
 
     },
 

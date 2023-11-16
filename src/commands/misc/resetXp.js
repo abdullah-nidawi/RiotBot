@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const UserSchema = require("../../schemas/userSchema");
+const Level = require("../../schemas/levelSchema");
 
 
 module.exports = {
@@ -19,15 +19,25 @@ module.exports = {
         await interaction.deferReply();
         const member = interaction.options.getUser("user");
 
-        let user = await UserSchema.findOne({
+        if (member.bot) {
+            interaction.editReply({
+                content: `Can't use this command on bots 💀.`
+            });
+
+            return;
+        }
+
+        let user = await Level.findOne({
             userId: member.id,
+            guildId: interaction.guild.id
         });
 
-        if (!user) {
-            user = new UserSchema({
-                userId: member.id,
-                userName: member.username
+        if (!user || user.xp == 0) {
+            interaction.editReply({
+                content: `Nah chill 💀.`
             });
+
+            return;
         }
 
         user.xp = 0;

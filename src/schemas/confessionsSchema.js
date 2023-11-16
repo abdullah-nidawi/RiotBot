@@ -12,21 +12,10 @@ const userSchema = new Schema({
     confessions: [{
         confText: String,
         confDate: Date
-    }],
-    level: {
-        type: Number,
-        default: 0
-    },
-    xp: {
-        type: Number,
-        default: 0
-    },
-    lastXp: {
-        type: Date
-    }
-    
-    
-}, {timestamps: true});
+    }]
+
+
+}, { timestamps: true });
 
 
 module.exports = model("userSchema", userSchema);
