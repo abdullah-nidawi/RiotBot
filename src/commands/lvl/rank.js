@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, AttachmentBuilder } = require("discord.js");
+const { SlashCommandBuilder, AttachmentBuilder } = require("discord.js");
 const canvacord = require('canvacord');
 const levelSchema = require("../../schemas/levelSchema");
 const { x, y } = require("../../cfg.json");
